@@ -15,14 +15,16 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 PLAIN='\033[0m'
 BLUE="\033[36m"
+URL="https://chat.openai.com"  # 设置目标URL
 
-SUPPORT_COUNTRY=(AL DZ AD AO AG AR AM AU AT AZ BS BD BB BE BZ BJ BT BA BW BR BG BF CV CA CL CO KM CR HR CY DK DJ DM DO EC SV EE FJ FI FR GA GM GE DE GH GR GD GT GN GW GY HT HN HU IS IN ID IQ IE IL IT JM JP JO KZ KE KI KW KG LV LB LS LR LI LT LU MG MW MY MV ML MT MH MR MU MX MC MN ME MA MZ MM NA NR NP NL NZ NI NE NG MK NO OM PK PW PA PG PE PH PL PT QA RO RW KN LC VC WS SM ST SN RS SC SL SG SK SI SB ZA ES LK SR SE CH TH TG TO TT TN TR TV UG AE US UY VU ZM BO BN CG CZ VA FM MD PS KR TW TZ TL GB)
+SUPPORT_COUNTRY=(AL DZ AD AO AG AR AM AU AT AZ BS BD BB BE BZ BJ BT BO BA BW BR BN BG BF CV CA CL CO KM CG CR CI HR CY CZ DK DJ DM DO EC SV EE FJ FI FR GA GM GE DE GH GR GD GT GN GW GY HT VA HN HU IS IN ID IQ IE IL IT JM JP JO KZ KE KI KW KG LV LB LS LR LI LT LU MG MW MY MV ML MT MH MR MU MX FM MD MC MN ME MA MZ MM NA NR NP NL NZ NI NE NG MK NO OM PK PW PS PA PG PY PE PH PL PT QA RO RW KN LC VC WS SM ST SN RS SC SL SG SK SI SB ZA KR ES LK SR SE CH TW TZ TH TL TG TO TT TN TR TV UG UA AE GB US UY VU ZM)
 echo -e "${BLUE}OpenAI Access Checker. Made by Vincent${PLAIN}"
 echo -e "${BLUE}https://github.com/missuo/OpenAI-Checker${PLAIN}"
 echo "-------------------------------------"
-if [[ $(curl -sS https://chat.openai.com/ -I | grep "text/plain") != "" ]]
+response=$(curl -sS "$URL")  # 发送HTTP请求并获取响应内容
+if echo "$response" | grep -qE "blocked|denied"
 then
-	echo "Your IP is BLOCKED!"
+	echo -e "${RED}Your IP is BLOCKED!${PLAIN}";
 else
 	echo -e "[IPv4]"
 	check4=`ping 1.1.1.1 -c 1 2>&1`;
